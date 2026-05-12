@@ -83,7 +83,7 @@ App({
     if (!user) user = userService.checkLogin()
     if (token && user) {
       this.globalData.userInfo = user
-      this.globalData.userId = user._id || user.openid || ''
+      this.globalData.userId = user.openid || user._id || ''
       this.globalData.isLoggedIn = true
       this.globalData.isAdmin = user.is_admin || false
     }

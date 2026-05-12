@@ -19,6 +19,7 @@ Page({
     statusBarHeight: 44,
     _keyCounter: 0,
     _savedBeforeUnload: false,
+    _publishedSuccess: false,
 
     // V2 新增字段
     startDate: '',
@@ -81,7 +82,10 @@ Page({
   /** 退出时自动保存草稿（仅当未手动保存过） */
   onUnload() {
     try {
-      if (!this.data._savedBeforeUnload && this._hasContent() && !this.data.publishing) {
+      if (this.data._savedBeforeUnload) return
+      if (this.data.publishing) return
+      if (this.data._publishedSuccess) return
+      if (this._hasContent()) {
         this._autoSaveDraft()
       }
     } catch (e) {
@@ -612,6 +616,8 @@ Page({
         })
       })
       var journalId = callResult._id
+      // 标记发布成功，阻止 onUnload 自动保存草稿
+      this.setData({ _savedBeforeUnload: true, _publishedSuccess: true })
 
       wx.showToast({ title: '发布成功 🎉', icon: 'none', duration: 1500 })
       var self = this
@@ -646,6 +652,7 @@ Page({
       })
 
       if (res && res.code === 0) {
+        this.setData({ _savedBeforeUnload: true, _publishedSuccess: true })
         wx.showToast({ title: '保存成功', icon: 'success', duration: 1500 })
         var self = this
         setTimeout(function() { wx.redirectTo({ url: '/pages/journal/detail?id=' + self.data.draftId }) }, 1600)
