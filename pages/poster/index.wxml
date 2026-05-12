@@ -1,0 +1,58 @@
+<!-- pages/poster/index.wxml — 海报生成页（新 zip 风格） -->
+<view class="page-header" style="padding-top: {{statusBarHeight}}px; padding-right: {{navPaddingRight}}px;">
+  <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" bindtap="goBack" />
+  <text class="header-title">生成海报</text>
+  <text class="header-spacer"></text>
+</view>
+
+<view class="poster-body">
+  <!-- 海报预览（3:4） -->
+  <view class="poster-card" wx:if="{{photos.length > 0}}">
+    <view class="poster-preview" style="background-image: url('{{photos[selectedIndex] ? photos[selectedIndex].url : ''}}')">
+      <view class="poster-scrim"></view>
+      
+      <!-- 信息区 -->
+      <view class="poster-info">
+        <view class="poster-date">2024.10.24</view>
+        <text class="poster-title">KYOTO</text>
+        <view class="poster-location-badge">
+          <text class="loc-icon">📍</text>
+          <text class="loc-text">岚山竹林 · 京都 · 日本</text>
+        </view>
+        <view class="poster-quote">
+          <text class="quote-text">漫步在竹林中，听风穿过叶片的沙沙声，仿佛时间在这一刻慢了下来。</text>
+        </view>
+      </view>
+
+      <!-- 品牌水印 -->
+      <view class="poster-watermark">
+        <text class="wm-icon">🐾</text>
+        <text class="wm-text">Rabbit Travel</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="poster-empty" wx:else>
+    <text>暂无照片</text>
+  </view>
+
+  <!-- 节点选择 -->
+  <view class="node-section">
+    <view class="node-header">
+      <text class="node-title">选择回忆节点</text>
+      <text class="node-count" wx:if="{{photos.length > 0}}">{{selectedIndex + 1}}/{{photos.length}}</text>
+    </view>
+    <scroll-view scroll-x class="node-scroll" enhanced show-scrollbar="{{false}}">
+      <view wx:for="{{photos}}" wx:key="_id" class="node-thumb {{selectedIndex === index ? 'active' : ''}}" bindtap="selectPhoto" data-index="{{index}}">
+        <image src="{{item.url}}" mode="aspectFill" class="thumb-img" binderror="handleImageError" data-idx="{{index}}" data-imglist="photos" data-imgfield="url" data-imgidfield="_id" wx:if="{{item.url}}" />
+        <view class="thumb-img placeholder-thumb" wx:else>🐾</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="poster-actions">
+    <view class="poster-btn poster-btn-outline" bindtap="sharePoster">分享好友</view>
+    <view class="poster-btn poster-btn-primary" bindtap="savePoster">保存到相册</view>
+  </view>
+</view>

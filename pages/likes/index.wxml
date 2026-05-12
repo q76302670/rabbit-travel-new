@@ -1,0 +1,67 @@
+<!-- pages/likes/index.wxml — 我的点赞（新 zip 风格） -->
+<view class="page-header" style="padding-top: {{statusBarHeight}}px; padding-right: {{navPaddingRight}}px;">
+  <view class="header-left">
+    <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" bindtap="goBack" />
+    <text class="header-title">我的点赞</text>
+  </view>
+</view>
+
+<view class="likes-body">
+  <!-- 统计卡片 -->
+  <view class="stats-card">
+    <view class="stats-icon-box">
+      <text class="stats-big-num">{{journals.length}}</text>
+    </view>
+    <view class="stats-text">
+      <text class="stats-label">篇点赞游记</text>
+      <text class="stats-sub">Your Liked Memories</text>
+    </view>
+  </view>
+
+  <!-- 空态 -->
+  <view wx:if="{{journals.length === 0}}" class="list-empty">
+    <text>还没有点赞过游记</text>
+  </view>
+
+  <!-- 双列瀑布流 -->
+  <view class="card-grid" wx:else>
+    <view class="card-col">
+      <block wx:for="{{leftCol}}" wx:key="_id">
+        <view class="card-item" data-id="{{item._id}}" bindtap="goToDetail">
+          <view class="card-cover-wrap">
+            <image class="card-cover" src="{{item.coverUrl || item.cover}}" mode="widthFix" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="leftCol" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+            <view class="card-cover-empty img-placeholder" wx:else>🐾</view>
+            <view class="card-star">⭐</view>
+          </view>
+          <view class="card-info">
+            <text class="card-title">{{item.title}}</text>
+            <view class="card-author-row">
+              <view class="card-avatar-empty"></view>
+              <text class="card-name">{{item.author_name || '旅行者'}}</text>
+              <text class="card-likes">{{item.like_count || 0}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="card-col">
+      <block wx:for="{{rightCol}}" wx:key="_id">
+        <view class="card-item" data-id="{{item._id}}" bindtap="goToDetail">
+          <view class="card-cover-wrap">
+            <image class="card-cover" src="{{item.coverUrl || item.cover}}" mode="widthFix" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="rightCol" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+            <view class="card-cover-empty img-placeholder" wx:else>🐾</view>
+            <view class="card-star">⭐</view>
+          </view>
+          <view class="card-info">
+            <text class="card-title">{{item.title}}</text>
+            <view class="card-author-row">
+              <view class="card-avatar-empty"></view>
+              <text class="card-name">{{item.author_name || '旅行者'}}</text>
+              <text class="card-likes">{{item.like_count || 0}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

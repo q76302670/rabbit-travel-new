@@ -1,0 +1,308 @@
+/* pages/profile/profile.wxss — 个人中心（电影感旅行日记 zip 风格） */
+page {
+  background-color: #FFFFFF;
+}
+
+/* ======== 沉浸式头部 ======== */
+.profile-header {
+  background: #8A4DFF;
+  overflow: hidden;
+  position: relative;
+  min-height: 200px;
+  box-sizing: content-box;
+}
+
+.header-bg-deco {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 256px;
+  height: 256px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.header-content {
+  padding: 0 24px 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 编辑资料按钮（白色描边胶囊） */
+.edit-profile-btn {
+  position: absolute;
+  top: 140rpx;
+  right: 24rpx;
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 8rpx 16rpx;
+  background: rgba(255,255,255,0.15);
+  border: 1rpx solid rgba(255,255,255,0.35);
+  border-radius: 32rpx;
+}
+
+.edit-profile-icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.edit-profile-text {
+  font-size: 22rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+/* 未登录态登录引导（无紫色卡片） */
+.guest-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 32rpx 80rpx;
+}
+
+.guest-login-subtitle {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+
+.profile-login-btn {
+  width: 480rpx;
+  max-width: 480rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  background: #8A4DFF;
+  border-radius: 36rpx;
+  color: #FFFFFF;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 8rpx 32rpx rgba(138, 77, 255, 0.3);
+}
+
+.header-avatar-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.header-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.header-avatar-guest {
+  background: #FFFFFF;
+  padding: 4rpx;
+  box-sizing: border-box;
+}
+
+.header-avatar-empty {
+  background: rgba(255,255,255,0.2);
+}
+
+.header-text {
+  flex: 1;
+  padding-bottom: 8px;
+}
+
+.header-name {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.header-bio {
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  font-style: italic;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ======== 数据看板卡片（重叠） ======== */
+.stats-card {
+  margin: -32px 24px 0;
+  position: relative;
+  z-index: 2;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(124,77,255,0.12);
+  padding: 24px 16px;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.stat-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #7C4DFF;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #999999;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 32px;
+  background: #F0F0F0;
+}
+
+/* 消息入口铃铛 */
+.stat-msg-entry {
+  position: absolute;
+  top: 16rpx;
+  right: 24rpx;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-msg-icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.stat-msg-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 28rpx;
+  height: 28rpx;
+  background: #FF4444;
+  border-radius: 14rpx;
+  color: #fff;
+  font-size: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6rpx;
+  font-weight: 700;
+}
+
+/* ======== 偏好标签 ======== */
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 20px 24px 8px;
+}
+
+.tag-chip {
+  padding: 4px 12px;
+  background: #F5F0FF;
+  color: #7C4DFF;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* ======== 菜单列表 ======== */
+.menu-list {
+  padding: 8px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F5F5F5;
+}
+
+.menu-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #F5F0FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon-symbol {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.menu-item-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.menu-label {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1A1A;
+}
+
+.menu-count {
+  font-size: 12px;
+  color: #999999;
+  margin-right: 4px;
+}
+
+.menu-arrow {
+  font-size: 16px;
+  color: #CCCCCC;
+  line-height: 1;
+}
+
+.menu-item-noborder {
+  border: 1px solid #F5F5F5;
+}
+
+/* ======== 退出登录按钮 ======== */
+.logout-section {
+  margin: 0 32rpx 48rpx;
+}
+
+.logout-btn {
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  background: #FFFFFF;
+  border: 2rpx solid #FF4444;
+  border-radius: 16rpx;
+  color: #FF4444;
+  font-size: 28rpx;
+  font-weight: 500;
+}

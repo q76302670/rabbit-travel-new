@@ -1,0 +1,53 @@
+<!-- pages/my-journals/index.wxml — 我的游记（白底内容卡列表） -->
+<view class="page-header" style="padding-top: {{statusBarHeight}}px;">
+  <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" bindtap="goBack" />
+  <text class="header-title">我的游记</text>
+  <text class="header-right">管理</text>
+</view>
+
+<view class="journals-body">
+  <!-- 顶部信息区 -->
+  <view class="journals-hero">
+    <text class="journals-hero-count">共{{journals.length || 0}}篇游记</text>
+    <text class="journals-hero-sub">记录你的电影旅程</text>
+  </view>
+
+  <!-- 空态 -->
+  <view wx:if="{{journals.length === 0}}" class="journals-empty">
+    <text class="journals-empty-icon">🐾</text>
+    <text class="journals-empty-text">还没有游记</text>
+    <navigator url="/pages/publish/publish" open-type="switchTab" class="journals-empty-action">
+      <view class="journals-empty-btn">去发布</view>
+    </navigator>
+  </view>
+
+  <!-- 游记列表 -->
+  <view class="journals-list">
+    <view class="journal-card" wx:for="{{journals}}" wx:key="_id" data-id="{{item._id}}" bindtap="goToDetail">
+      <!-- 封面缩略图 -->
+      <image class="journal-cover" src="{{item.coverUrl || item.cover}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="journals" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+      <view class="journal-cover journal-cover-empty" wx:else>
+        <text class="journal-cover-emoji">🐾</text>
+      </view>
+
+      <!-- 右侧信息区 -->
+      <view class="journal-info">
+        <text class="journal-title">{{item.title}}</text>
+
+        <view class="journal-meta-row">
+          <text class="journal-date">{{item._time}}</text>
+          <text class="journal-meta-dot" wx:if="{{item._time && item._location}}">·</text>
+          <text class="journal-location" wx:if="{{item._location}}">{{item._location}}</text>
+        </view>
+
+        <view class="journal-divider"></view>
+
+        <view class="journal-stats">
+          <text class="journal-stat">♥ {{item.like_count || 0}}</text>
+          <text class="journal-stat">★ {{item.collect_count || 0}}</text>
+          <text class="journal-stat">👁 {{item.views || item.view_count || 0}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

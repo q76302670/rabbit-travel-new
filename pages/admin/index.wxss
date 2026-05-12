@@ -1,0 +1,543 @@
+/* pages/admin/index.wxss — 管理后台（新 zip 风格） */
+page {
+  background-color: #F8F4FF;
+}
+
+/* ======== 导航栏 ======== */
+.admin-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 44px; box-sizing: content-box;
+  padding-left: 16px; background: #8A4DFF;
+}
+.nav-left { display: flex; align-items: center; gap: 8px; }
+.nav-icon { font-size: 16px; color: #FFFFFF; }
+.nav-title { font-size: 18px; font-weight: 700; color: #FFFFFF; }
+.nav-right { display: flex; align-items: center; gap: 8px; }
+.nav-version {
+  font-size: 9px; color: rgba(255,255,255,0.6);
+  padding: 2px 8px; background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+}
+.nav-exit {
+  font-size: 12px; color: #FFFFFF;
+  padding: 4px 12px;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 16px;
+}
+
+/* ======== 滚动容器 ======== */
+.admin-scroll {
+  height: calc(100vh - 44px);
+  padding-bottom: 20px;
+}
+
+/* ======== Hero Banner ======== */
+.hero-banner {
+  position: relative;
+  margin: 16px;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.hero-bg {
+  width: 100%;
+  height: 192px;
+  background: linear-gradient(135deg, #2D1050 0%, #1A0A2E 100%);
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(124,77,255,0.6) 0%, transparent 100%);
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 20px; left: 24px;
+  z-index: 2;
+}
+
+.hero-title {
+  display: block;
+  font-size: 24px; font-weight: 900; color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.hero-sub {
+  display: block;
+  font-size: 10px; color: rgba(255,255,255,0.6);
+}
+
+.hero-badge {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 4px 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-dot {
+  font-size: 8px; color: #4CAF50;
+}
+
+.badge-text {
+  font-size: 9px; color: #FFFFFF; font-weight: 700;
+}
+
+/* ======== 统计网格 ======== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F0F0F0;
+}
+
+.stat-card-highlight {
+  background: #7C4DFF;
+  border: none;
+  box-shadow: 0 8px 24px rgba(124,77,255,0.25);
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.stat-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.stat-icon-light { color: rgba(255,255,255,0.7); }
+
+.stat-label {
+  font-size: 10px; font-weight: 700; color: #999;
+}
+
+.stat-label-light { color: rgba(255,255,255,0.6); }
+
+.stat-num {
+  display: block;
+  font-size: 24px; font-weight: 900; color: #1A1A1A;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-num-light { color: #FFFFFF; }
+
+.stat-growth {
+  display: block;
+  font-size: 10px; color: #4CAF50; font-weight: 700;
+}
+
+.stat-growth-light { color: rgba(255,255,255,0.5); }
+
+.stat-tip {
+  display: block;
+  font-size: 10px; color: #999; font-weight: 500;
+}
+
+/* ======== 近期游记 ======== */
+.journal-section {
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 0 4px;
+}
+
+.section-header-left { }
+.section-title {
+  display: block;
+  font-size: 18px; font-weight: 900; color: #1A1A1A;
+}
+.section-sub {
+  display: block;
+  font-size: 10px; color: #999; margin-top: 2px;
+}
+
+.section-filter-btn {
+  font-size: 10px; color: #7C4DFF; font-weight: 700;
+  background: #FFFFFF;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F0F0F0;
+}
+
+/* 游记卡片列表 */
+.journal-card-list {
+  background: #FFFFFF;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F0F0F0;
+}
+
+.journal-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+  border-bottom: 1px solid #F5F0FF;
+}
+
+.journal-item:last-child {
+  border-bottom: none;
+}
+
+.item-thumb {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.item-img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+
+.item-img-empty {
+  width: 100%; height: 100%;
+  background: #F0E8F8;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-title {
+  display: block;
+  font-size: 13px; font-weight: 700; color: #1A1A1A;
+  margin-bottom: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.item-meta {
+  display: flex;
+  gap: 12px;
+}
+
+.item-id {
+  font-size: 9px; color: #7C4DFF; font-weight: 700;
+  font-family: monospace;
+  opacity: 0.5;
+}
+
+.item-user {
+  font-size: 9px; color: #7C4DFF; font-weight: 700;
+}
+
+.item-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-view {
+  width: 32px; height: 32px;
+  background: #F8F4FF;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+
+.action-del {
+  width: 32px; height: 32px;
+  background: #FFF0F0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  color: #FF4444;
+}
+
+/* 查看全部 */
+.view-all-btn {
+  text-align: center;
+  margin-top: 4px;
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 32px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F0F0F0;
+}
+
+.view-all-btn text {
+  font-size: 13px; color: #7C4DFF; font-weight: 700;
+}
+
+/* ======== Tab 切换 ======== */
+.admin-tabs {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #F0F0F0;
+}
+
+.tab-active {
+  background: #7C4DFF;
+  border-color: #7C4DFF;
+  box-shadow: 0 4px 16px rgba(124,77,255,0.2);
+}
+
+.tab-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #999;
+}
+
+.tab-active .tab-text {
+  color: #FFFFFF;
+}
+
+.tab-count {
+  font-size: 10px;
+  color: #CCC;
+  background: #F5F0FF;
+  padding: 1px 8px;
+  border-radius: 10px;
+}
+
+.tab-active .tab-count {
+  color: #7C4DFF;
+  background: rgba(255,255,255,0.85);
+}
+
+.tab-content {
+  padding: 0 16px;
+}
+
+.section-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  font-size: 10px;
+  color: #7C4DFF;
+  font-weight: 700;
+  background: #FFFFFF;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F0F0F0;
+}
+
+/* ======== 批量操作栏 ======== */
+.batch-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  border: 1px solid #7C4DFF;
+}
+
+.batch-select-all {
+  font-size: 12px;
+  color: #7C4DFF;
+  font-weight: 700;
+}
+
+.batch-count {
+  flex: 1;
+  font-size: 11px;
+  color: #999;
+}
+
+.batch-delete-btn {
+  font-size: 12px;
+  color: #FF4444;
+  font-weight: 700;
+  padding: 4px 16px;
+  background: #FFF0F0;
+  border-radius: 16px;
+}
+
+/* ======== 游记列表 ======== */
+.item-checkbox {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #DDD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.checkbox-checked {
+  background: #7C4DFF;
+  border-color: #7C4DFF;
+}
+
+.item-status {
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.status-published {
+  color: #4CAF50;
+  background: #E8F5E9;
+}
+
+.status-draft {
+  color: #FF9800;
+  background: #FFF3E0;
+}
+
+.item-time {
+  font-size: 9px;
+  color: #CCC;
+}
+
+/* ======== 用户列表 ======== */
+.user-card-list {
+  background: #FFFFFF;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F0F0F0;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+  border-bottom: 1px solid #F5F0FF;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
+
+.user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #F0E8F8;
+}
+
+.user-avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
+.user-avatar-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 2px;
+}
+
+.user-meta {
+  display: flex;
+  gap: 12px;
+}
+
+.user-id {
+  font-size: 9px;
+  color: #7C4DFF;
+  font-weight: 700;
+  opacity: 0.5;
+  font-family: monospace;
+}
+
+.user-journal-count {
+  font-size: 9px;
+  color: #7C4DFF;
+  font-weight: 700;
+}
+
+.user-join-time {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.join-time-text {
+  font-size: 9px;
+  color: #CCC;
+}
+
+/* ======== 空状态 ======== */
+.empty-state {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 12px;
+  color: #CCC;
+}
+
+/* ======== 底部间距 ======== */
+.admin-spacer { height: 32px; }

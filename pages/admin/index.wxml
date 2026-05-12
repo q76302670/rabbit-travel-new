@@ -1,0 +1,165 @@
+<!-- pages/admin/index.wxml — 管理后台 -->
+<!-- 导航栏 -->
+<view class="admin-nav" style="padding-top: {{statusBarHeight}}px; padding-right: {{navPaddingRight}}px;">
+  <view class="nav-left">
+    <text class="nav-icon">🐾</text>
+    <text class="nav-title">管理后台</text>
+  </view>
+  <view class="nav-right">
+    <text class="nav-version">V 2.4.0</text>
+    <text class="nav-exit" bindtap="goBack">退出</text>
+  </view>
+</view>
+
+<scroll-view class="admin-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <!-- 系统概览 Hero -->
+  <view class="hero-banner">
+    <view class="hero-bg">
+      <view class="hero-overlay"></view>
+      <view class="hero-content">
+        <text class="hero-title">系统概览</text>
+        <text class="hero-sub">Rabbit Travel 生态系统的实时统计与内容管理</text>
+      </view>
+    </view>
+    <view class="hero-badge">
+      <text class="badge-dot">●</text>
+      <text class="badge-text">V 2.4.0 Running</text>
+    </view>
+  </view>
+
+  <!-- 核心指标 2x2 -->
+  <view class="stats-grid">
+    <view class="stat-card">
+      <view class="stat-header">
+        <text class="stat-icon">👥</text>
+        <text class="stat-label">总用户</text>
+      </view>
+      <text class="stat-num">{{stats.totalUsers}}</text>
+      <text class="stat-tip">注册用户总数</text>
+    </view>
+    <view class="stat-card stat-card-highlight">
+      <view class="stat-header">
+        <text class="stat-icon stat-icon-light">📝</text>
+        <text class="stat-label stat-label-light">总游记</text>
+      </view>
+      <text class="stat-num stat-num-light">{{stats.totalJournals}}</text>
+      <text class="stat-growth-light">已发布</text>
+    </view>
+    <view class="stat-card">
+      <view class="stat-header">
+        <text class="stat-icon">⏱️</text>
+        <text class="stat-label">今日新增</text>
+      </view>
+      <text class="stat-num">{{stats.todayJournals}}</text>
+      <text class="stat-tip">游记 · 今日新增</text>
+    </view>
+    <view class="stat-card">
+      <view class="stat-header">
+        <text class="stat-icon">👤</text>
+        <text class="stat-label">今日新增</text>
+      </view>
+      <text class="stat-num">{{stats.todayUsers}}</text>
+      <text class="stat-tip">用户 · 今日新增</text>
+    </view>
+  </view>
+
+  <!-- Tab 切换 -->
+  <view class="admin-tabs">
+    <view class="tab-item {{tab === 'journals' ? 'tab-active' : ''}}" data-tab="journals" bindtap="switchTab">
+      <text class="tab-text">游记管理</text>
+      <text class="tab-count">{{journals.length}}</text>
+    </view>
+    <view class="tab-item {{tab === 'users' ? 'tab-active' : ''}}" data-tab="users" bindtap="switchTab">
+      <text class="tab-text">用户管理</text>
+      <text class="tab-count">{{users.length}}</text>
+    </view>
+  </view>
+
+  <!-- ========== 游记管理 Tab ========== -->
+  <view wx:if="{{tab === 'journals'}}" class="tab-content">
+    <view class="section-header">
+      <view class="section-header-left">
+        <text class="section-title">游记列表</text>
+        <text class="section-sub">共 {{journals.length}} 篇</text>
+      </view>
+      <view class="section-actions">
+        <text class="action-btn" bindtap="toggleBatchMode">{{batchMode ? '取消' : '批量'}}</text>
+      </view>
+    </view>
+
+    <!-- 批量操作栏 -->
+    <view class="batch-bar" wx:if="{{batchMode}}">
+      <text class="batch-select-all" bindtap="toggleSelectAll">{{selectedIds.length === journals.length && journals.length > 0 ? '取消全选' : '全选'}}</text>
+      <text class="batch-count">已选 {{selectedIds.length}} 篇</text>
+      <text class="batch-delete-btn" bindtap="batchDelete">删除选中</text>
+    </view>
+
+    <!-- 游记卡片列表 -->
+    <view class="journal-card-list">
+      <view class="journal-item" wx:for="{{journals}}" wx:key="_id" data-id="{{item._id}}">
+        <!-- 批量选择框 -->
+        <view class="item-checkbox {{batchMode ? 'checkbox-visible' : ''}}" wx:if="{{batchMode}}" data-id="{{item._id}}" bindtap="toggleSelect">
+          <text class="checkbox-icon {{selectedIds.indexOf(item._id) !== -1 ? 'checkbox-checked' : ''}}">{{selectedIds.indexOf(item._id) !== -1 ? '✓' : ''}}</text>
+        </view>
+
+        <view class="item-thumb" wx:if="{{!batchMode}}">
+          <image class="item-img" src="{{item.coverUrl || item.cover}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="journals" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+          <view class="item-img-empty img-placeholder img-placeholder--small" wx:else>🐾</view>
+        </view>
+        <view class="item-info">
+          <text class="item-title">{{item.title || '未命名游记'}}</text>
+          <view class="item-meta">
+            <text class="item-status {{item.status === 'published' ? 'status-published' : 'status-draft'}}">{{item._statusLabel}}</text>
+            <text class="item-user">ID: {{item.author_id ? item.author_id.slice(-6) : '未知'}}</text>
+            <text class="item-time">{{item._time ? item._time.slice(0, 10) : ''}}</text>
+          </view>
+        </view>
+        <view class="item-actions" wx:if="{{!batchMode}}">
+          <text class="action-del" data-id="{{item._id}}" data-title="{{item.title}}" catchtap="deleteJournal">🗑️</text>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{journals.length === 0 && !loading}}">
+        <text class="empty-text">暂无游记数据</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 用户管理 Tab ========== -->
+  <view wx:elif="{{tab === 'users'}}" class="tab-content">
+    <view class="section-header">
+      <view class="section-header-left">
+        <text class="section-title">用户列表</text>
+        <text class="section-sub">共 {{users.length}} 位用户</text>
+      </view>
+    </view>
+
+    <view class="user-card-list">
+      <view class="user-item" wx:for="{{users}}" wx:key="_id">
+        <view class="user-avatar">
+          <image class="user-avatar-img" src="{{item.avatar}}" mode="aspectFill" wx:if="{{item.avatar}}" />
+          <view class="user-avatar-empty" wx:else>👤</view>
+        </view>
+        <view class="user-info">
+          <text class="user-name">{{item.nickname || '未知用户'}}</text>
+          <view class="user-meta">
+            <text class="user-id">#{{item._id ? item._id.slice(-6) : '------'}}</text>
+            <text class="user-journal-count">{{item.journalCount || 0}} 篇游记</text>
+          </view>
+        </view>
+        <view class="user-join-time" wx:if="{{item.created_at}}">
+          <text class="join-time-text">{{item.created_at.slice(0, 10)}}</text>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{users.length === 0 && !loading}}">
+        <text class="empty-text">暂无用户数据</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="admin-spacer"></view>
+</scroll-view>

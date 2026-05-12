@@ -1,0 +1,160 @@
+/* pages/my-journals/index.wxss — 我的游记（白底内容卡列表） */
+page { background-color: #F8F7FC; }
+
+/* ======== 导航栏（不动） ======== */
+.page-header {
+  display: flex; align-items: center; height: 44px; box-sizing: content-box;
+  padding: 0 16px; background-color: #8A4DFF;
+}
+.header-back { font-size: 14px; color: #FFFFFF; margin-right: 12px; }
+.header-title { flex: 1; font-size: 18px; font-weight: 700; color: #FFFFFF; text-align: center; }
+.header-right { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+/* ======== 主体 ======== */
+.journals-body {
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+
+/* ======== 顶部信息区 ======== */
+.journals-hero {
+  padding: 20px 4px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.journals-hero-count {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1A1A1A;
+  line-height: 1.3;
+}
+
+.journals-hero-sub {
+  font-size: 13px;
+  color: #999;
+  line-height: 1.4;
+}
+
+/* ======== 空态 ======== */
+.journals-empty {
+  text-align: center; padding: 100px 32px;
+}
+.journals-empty-icon {
+  font-size: 48px; display: block; margin-bottom: 16px;
+}
+.journals-empty-text {
+  font-size: 15px; font-weight: 600; color: #999; display: block; margin-bottom: 20px;
+}
+.journals-empty-action { display: inline-block; }
+.journals-empty-btn {
+  display: inline-block; padding: 10px 32px;
+  background: #7C4DFF; border-radius: 24px;
+  font-size: 14px; color: #FFFFFF; font-weight: 600;
+}
+
+/* ======== 游记卡片（白底内容卡） ======== */
+.journal-card {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* 封面缩略图 */
+.journal-cover {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 14px;
+  flex-shrink: 0;
+  object-fit: cover;
+  display: block;
+}
+
+.journal-cover-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5F0FF;
+}
+
+.journal-cover-emoji {
+  font-size: 32rpx;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+/* 右侧信息区 */
+.journal-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* 标题 */
+.journal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1A1A1A;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+/* 元信息行：日期 · 地点 */
+.journal-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.journal-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.journal-meta-dot {
+  font-size: 12px;
+  color: #CCC;
+}
+
+.journal-location {
+  font-size: 12px;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 120px;
+}
+
+/* 分隔线 */
+.journal-divider {
+  width: 100%;
+  height: 1px;
+  background: #F0F0F0;
+  margin-bottom: 8px;
+}
+
+/* 底部统计行 */
+.journal-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.journal-stat {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+}

@@ -1,0 +1,17 @@
+/* pages/agreement/index.wxss */
+page { background: #FFFFFF; }
+
+.agree-page { min-height: 100vh; display: flex; flex-direction: column; }
+
+.agree-nav {
+  display: flex; align-items: center;
+  background: #8A4DFF; color: #FFF;
+  padding: 0 24rpx; padding-bottom: 16rpx;
+}
+.agree-back { font-size: 40rpx; width: 60rpx; height: 60rpx; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.agree-title { font-size: 32rpx; font-weight: 700; flex: 1; text-align: center; }
+.agree-nav-spacer { width: 60rpx; flex-shrink: 0; }
+
+.agree-body { flex: 1; padding: 32rpx 32rpx; }
+.agree-text { font-size: 28rpx; color: #333; line-height: 1.8; white-space: pre-wrap; display: block; }
+.agree-spacer { height: 60rpx; }

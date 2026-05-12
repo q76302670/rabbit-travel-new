@@ -1,0 +1,109 @@
+.tabbar-container {
+  position: relative;
+  width: 100%;
+}
+
+.tabbar-container.hidden {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+.tabbar-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 50px;
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  align-items: stretch;
+  background: #8A4DFF;
+  padding: 0 12px;
+}
+
+/* ======== 左/右 Tab ======== */
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 0;
+  color: rgba(255,255,255,0.5);
+}
+
+.tab-item.active {
+  color: #FFFFFF;
+}
+
+.tab-icon-wrap {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: rgba(255,255,255,0.5);
+}
+
+.tab-icon.active {
+  color: #FFFFFF;
+}
+
+.tab-label {
+  font-size: 10px;
+  line-height: 1.2;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.tab-label.active {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+/* ======== 发布按钮（中间凸起） ======== */
+.tab-item-publish {
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.tab-publish-btn {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  margin-left: -26px;
+  width: 52px;
+  height: 52px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(138,77,255,0.4);
+}
+
+.tab-publish-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.15s ease;
+}
+
+.tab-publish-icon {
+  color: #8A4DFF;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  margin-top: -2px;
+}

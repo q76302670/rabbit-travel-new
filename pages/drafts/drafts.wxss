@@ -1,0 +1,280 @@
+/* pages/drafts/drafts.wxss — 草稿箱（左图右紫块设计稿方向） */
+page { background-color: #F8F7FC; }
+
+/* ======== 导航栏 ======== */
+.page-header {
+  display: flex; align-items: center; height: 44px; box-sizing: content-box;
+  padding: 0 16px; background-color: #8A4DFF;
+}
+.header-back { font-size: 14px; color: #FFFFFF; margin-right: 12px; }
+.header-title { flex: 1; font-size: 18px; font-weight: 700; color: #FFFFFF; text-align: center; }
+.header-spacer { width: 40px; }
+
+/* ======== 主体 ======== */
+.drafts-body {
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+
+/* ======== 顶部引导区 ======== */
+.drafts-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 0 16px 0;
+}
+
+.hero-timeline {
+  width: 3px;
+  height: 52px;
+  background: linear-gradient(180deg, #7C4DFF 0%, rgba(124,77,255,0.3) 100%);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #7C4DFF;
+  line-height: 1.4;
+}
+
+.hero-subtitle {
+  font-size: 13px;
+  color: #1A1A1A;
+  line-height: 1.4;
+}
+
+/* ======== 空态 ======== */
+.drafts-empty {
+  text-align: center; padding: 100px 32px;
+}
+.drafts-empty-icon {
+  font-size: 48px; display: block; margin-bottom: 16px;
+}
+.drafts-empty-text {
+  font-size: 17px; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 6px;
+}
+.drafts-empty-sub {
+  font-size: 13px; color: #999999; display: block; margin-bottom: 24px;
+}
+.drafts-empty-action { display: inline-block; }
+.drafts-empty-btn {
+  display: inline-block; padding: 12px 36px;
+  background: #7C4DFF; border-radius: 24px;
+  font-size: 14px; color: #FFFFFF; font-weight: 600;
+}
+
+/* ======== 草稿卡片：左图右紫块 ======== */
+.draft-card {
+  display: flex;
+  height: 250rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4px 16px rgba(124,77,255,0.10);
+  position: relative;
+}
+
+/* ======== 左侧图片区（~38%） ======== */
+.draft-image-side {
+  width: 38%;
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #F0ECF8 0%, #E8E0F0 100%);
+}
+
+.draft-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.draft-image-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #F0ECF8 0%, #E8E0F0 100%);
+}
+
+.draft-image-emoji {
+  font-size: 36rpx;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+/* 草稿标记角标（叠加在图片左上角） */
+.draft-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, rgba(124,77,255,0.92) 0%, rgba(124,77,255,0.75) 100%);
+  padding: 4rpx 12rpx;
+  border-bottom-right-radius: 12rpx;
+}
+
+.draft-badge-text {
+  font-size: 18rpx;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* ======== 右侧紫色信息区（~62%） ======== */
+.draft-info-side {
+  flex: 1;
+  background: linear-gradient(150deg, #7C4DFF 0%, #6B3FE0 100%);
+  padding: 20rpx 24rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.draft-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: block;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* 分隔装饰 */
+.draft-divider {
+  width: 36rpx;
+  height: 3rpx;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2rpx;
+  margin: 10rpx 0;
+}
+
+/* 统计行 */
+.draft-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.draft-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.draft-stat-icon {
+  font-size: 20rpx;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.draft-stat-value {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.draft-stat-label {
+  font-size: 20rpx;
+  color: rgba(255,255,255,0.6);
+  line-height: 1;
+}
+
+.draft-stat-divider {
+  width: 2rpx;
+  height: 20rpx;
+  background: rgba(255,255,255,0.2);
+  margin: 0 14rpx;
+}
+
+/* 底部 */
+.draft-footer {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.draft-time-icon {
+  font-size: 18rpx;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.draft-time {
+  font-size: 20rpx;
+  color: rgba(255,255,255,0.6);
+}
+
+/* 继续编辑入口 */
+.draft-continue {
+  position: absolute;
+  bottom: 16rpx;
+  right: 24rpx;
+}
+
+.draft-continue-text {
+  font-size: 20rpx;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+/* ======== 删除按钮 ======== */
+.draft-delete {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  width: 38rpx;
+  height: 38rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+.draft-delete-icon {
+  font-size: 20rpx;
+  color: rgba(255,255,255,0.7);
+  line-height: 1;
+}
+
+/* ======== 底部新建入口 ======== */
+.drafts-bottom {
+  margin-top: 8px; margin-bottom: 24px;
+  display: flex; justify-content: center;
+}
+
+.drafts-create-btn {
+  width: 100%; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px;
+  background: #FFFFFF;
+  border: 1.5px dashed #D0C0E8;
+  border-radius: 14px;
+  color: #7C4DFF;
+  font-size: 15px; font-weight: 600;
+}
+
+.drafts-create-icon {
+  font-size: 18px; line-height: 1;
+}
+
+.drafts-create-text {
+  font-size: 15px;
+}

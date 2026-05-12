@@ -1,0 +1,26 @@
+<view class="tabbar-container {{hidden ? 'hidden' : ''}}">
+  <view class="tabbar-nav">
+    <!-- 首页 -->
+    <view class="tab-item {{value === 'home' ? 'active' : ''}}" bindtap="onTabTap" data-tab="home">
+      <view class="tab-icon-wrap">
+        <text class="tab-icon {{value === 'home' ? 'active' : ''}}">⌂</text>
+      </view>
+      <text class="tab-label {{value === 'home' ? 'active' : ''}}">首页</text>
+    </view>
+
+    <!-- 发布（中间凸起） -->
+    <view class="tab-item-publish" bindtap="onTabTap" data-tab="publish">
+      <view class="tab-publish-btn">
+        <text class="tab-publish-icon">+</text>
+      </view>
+    </view>
+
+    <!-- 我的 -->
+    <view class="tab-item {{value === 'profile' ? 'active' : ''}}" bindtap="onTabTap" data-tab="profile">
+      <view class="tab-icon-wrap">
+        <text class="tab-icon {{value === 'profile' ? 'active' : ''}}">◉</text>
+      </view>
+      <text class="tab-label {{value === 'profile' ? 'active' : ''}}">我的</text>
+    </view>
+  </view>
+</view>

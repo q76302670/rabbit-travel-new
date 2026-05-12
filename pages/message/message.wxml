@@ -1,0 +1,39 @@
+<!-- pages/message/message.wxml — 通知消息列表 -->
+<!-- 顶部导航 -->
+<view class="page-header" style="padding-top: {{statusBarHeight}}px;">
+  <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" bindtap="goBack" />
+  <text class="header-title">消息</text>
+  <text class="header-action {{unreadCount > 0 ? '' : 'header-action-disabled'}}" bindtap="markAllRead">全部已读</text>
+</view>
+
+<view class="msg-body">
+  <view wx:if="{{notifications.length === 0}}" class="msg-empty">
+    <text>暂无消息通知</text>
+  </view>
+
+  <!-- 通知列表 -->
+  <view
+    class="notification-item {{item.isRead ? 'read' : 'unread'}}"
+    wx:for="{{notifications}}"
+    wx:key="_id"
+    wx:for-index="idx"
+    data-id="{{item._id}}"
+    data-index="{{idx}}"
+    bindtap="onNotificationTap"
+    bindlongpress="onNotificationLongPress"
+  >
+    <!-- 头像 -->
+    <image class="ntf-avatar" src="{{item.actorAvatar || '/images/default-avatar.png'}}" mode="aspectFill" binderror="handleImageError" wx:if="{{item.actorAvatar}}" />
+    <view class="ntf-avatar ntf-avatar-empty" wx:else>🐾</view>
+
+    <!-- 文案区 -->
+    <view class="ntf-content">
+      <text class="ntf-text">
+        <text class="ntf-name">{{item.actorName}}</text>
+        <text class="ntf-action">{{item.actionText}}</text>
+      </text>
+      <text class="ntf-preview" wx:if="{{item.contentPreview}}">{{item.contentPreview}}</text>
+      <text class="ntf-time">{{item.timeText}}</text>
+    </view>
+  </view>
+</view>

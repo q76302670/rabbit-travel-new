@@ -1,0 +1,14 @@
+<view class="agree-page">
+  <!-- 导航栏 -->
+  <view class="agree-nav" style="padding-top: {{statusBarHeight}}px;">
+    <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" bindtap="goBack" />
+    <text class="agree-title">{{title}}</text>
+    <view class="agree-nav-spacer"></view>
+  </view>
+
+  <!-- 协议内容 -->
+  <scroll-view class="agree-body" scroll-y>
+    <text class="agree-text">{{content}}</text>
+    <view class="agree-spacer"></view>
+  </scroll-view>
+</view>

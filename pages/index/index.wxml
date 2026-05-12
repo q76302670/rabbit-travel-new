@@ -1,0 +1,149 @@
+<!-- pages/index/index.wxml — 首页（Stitch ⭐ 原型重做） -->
+
+<!-- 顶部导航栏 -->
+<view class="nav-bar" style="padding-top: {{statusBarHeight}}px; padding-right: {{navPaddingRight}}px;">
+  <view class="nav-left">
+    <image class="nav-icon" src="/images/rabbit-icon.png" mode="aspectFit" />
+    <text class="nav-title">兔子旅行</text>
+  </view>
+  <!-- 顶部右侧不再放置搜索按钮，由下方搜索栏承接 -->
+  <view class="nav-right"></view>
+</view>
+
+<!-- 搜索栏 -->
+<view class="search-bar">
+  <text class="search-icon">🔍</text>
+  <input class="search-input" placeholder="搜索目的地或游记标题" placeholder-class="search-placeholder" confirm-type="search" bindconfirm="onSearchConfirm" bindfocus="onSearchFocus" bindblur="onSearchBlur" />
+</view>
+
+<!-- 模式切换（segmented control） -->
+<view class="mode-wrap">
+  <view class="mode-switch">
+    <view class="mode-slider" style="transform: translateX({{displayMode === 'card' ? '100%' : '0'}})"></view>
+    <view class="mode-btn {{displayMode === 'film' ? 'active' : ''}}" bindtap="switchMode" data-mode="film">
+      <text class="mode-icon">▦</text>
+      <text class="mode-label">胶片</text>
+    </view>
+    <view class="mode-btn {{displayMode === 'card' ? 'active' : ''}}" bindtap="switchMode" data-mode="card">
+      <text class="mode-icon">⊞</text>
+      <text class="mode-label">卡片</text>
+    </view>
+  </view>
+</view>
+
+<!-- 内容列表 -->
+<scroll-view class="content-scroll" scroll-y enhanced show-scrollbar="{{false}}" enable-back-to-top>
+
+  <!-- ======== 胶片模式 ======== -->
+  <view wx:if="{{displayMode === 'film'}}" class="film-list">
+    <!-- 空状态 -->
+    <view wx:if="{{loaded && journals.length === 0}}" class="empty-state">
+      <text class="empty-icon">🐾</text>
+      <text class="empty-text">还没有游记，快来发布第一篇吧</text>
+      <view class="empty-action" bindtap="goToPublish">
+        <text class="empty-action-text">去发布</text>
+      </view>
+    </view>
+
+    <!-- 胶片卡片列表 -->
+    <view class="film-cards">
+      <view class="film-card" wx:for="{{journals}}" wx:key="_id" data-id="{{item._id}}" bindtap="goToDetail">
+        <!-- 封面图（21:9全宽） -->
+        <image class="film-cover" src="{{item.coverUrl}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="journals" data-imgidfield="_id" data-update-cols="1" wx:if="{{item.coverUrl}}" />
+        <view class="film-cover img-placeholder" wx:else>🐾</view>
+        
+        <!-- 渐变遮罩（底部到顶部） -->
+        <view class="film-scrim"></view>
+        
+        <!-- 信息叠压层 -->
+        <view class="film-overlay">
+          <!-- 左上角：作者行 -->
+          <view class="film-author">
+            <image class="film-avatar" src="{{item.author_avatar}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="author_avatar" data-imglist="journals" data-imgidfield="_id" wx:if="{{item.author_avatar}}" />
+            <view class="avatar-placeholder avatar-placeholder--sm" wx:else>🐾</view>
+            <text class="film-author-name">{{item.author_name || '旅行者'}}</text>
+          </view>
+          <!-- 底部：标题 -->
+          <text class="film-title">{{item.title}}</text>
+          <!-- 底部：元信息 -->
+          <text class="film-meta">{{item._pubDate || ''}}<text wx:if="{{item._pubDate}}"> · </text>{{item.days || ''}}天<text wx:if="{{item.views}}"> · {{item.views}}次浏览</text></text>
+        </view>
+        
+        <!-- 右下角：点赞数（暖金色） -->
+        <text class="film-likes" wx:if="{{item.likes > 0}}">♥ {{item.likes}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ======== 卡片模式（双列瀑布流） ======== -->
+  <view wx:if="{{displayMode === 'card'}}" class="card-mode">
+    <!-- 空状态 -->
+    <view wx:if="{{loaded && journals.length === 0}}" class="empty-state">
+      <text class="empty-icon">🐾</text>
+      <text class="empty-text">还没有游记，快来发布第一篇吧</text>
+      <view class="empty-action" bindtap="goToPublish">
+        <text class="empty-action-text">去发布</text>
+      </view>
+    </view>
+
+    <view class="card-grid">
+      <!-- 左列 -->
+      <view class="card-col">
+        <block wx:for="{{journalsLeft}}" wx:key="_id">
+          <view class="card-item" data-id="{{item._id}}" bindtap="goToDetail">
+            <image class="card-img" src="{{item.coverUrl}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="journals" data-imgidfield="_id" data-update-cols="1" wx:if="{{item.coverUrl}}" />
+            <view class="card-img-empty img-placeholder" wx:else>🐾</view>
+            <view class="card-title-bar">
+              <text class="card-title">{{item.title}}</text>
+            </view>
+            <view class="card-scrim"></view>
+            <view class="card-overlay">
+              <view class="card-bottom-row">
+                <view class="card-author-row">
+                  <image class="card-avatar" src="{{item.author_avatar}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="author_avatar" data-imglist="journals" data-imgidfield="_id" wx:if="{{item.author_avatar}}" />
+                  <view class="avatar-placeholder avatar-placeholder--xs" wx:else>🐾</view>
+                  <text class="card-author-name">{{item.author_name || '旅行者'}}</text>
+                </view>
+                <view class="card-meta-right">
+                  <text class="card-days" wx:if="{{item.days}}">{{item.days}}天</text>
+                  <text class="card-likes" wx:if="{{item.likes > 0}}">♥ {{item.likes}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <!-- 右列 -->
+      <view class="card-col">
+        <block wx:for="{{journalsRight}}" wx:key="_id">
+          <view class="card-item" data-id="{{item._id}}" bindtap="goToDetail">
+            <image class="card-img" src="{{item.coverUrl}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="journals" data-imgidfield="_id" data-update-cols="1" wx:if="{{item.coverUrl}}" />
+            <view class="card-img-empty img-placeholder" wx:else>🐾</view>
+            <view class="card-title-bar">
+              <text class="card-title">{{item.title}}</text>
+            </view>
+            <view class="card-scrim"></view>
+            <view class="card-overlay">
+              <view class="card-bottom-row">
+                <view class="card-author-row">
+                  <image class="card-avatar" src="{{item.author_avatar}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="author_avatar" data-imglist="journals" data-imgidfield="_id" wx:if="{{item.author_avatar}}" />
+                  <view class="avatar-placeholder avatar-placeholder--xs" wx:else>🐾</view>
+                  <text class="card-author-name">{{item.author_name || '旅行者'}}</text>
+                </view>
+                <view class="card-meta-right">
+                  <text class="card-days" wx:if="{{item.days}}">{{item.days}}天</text>
+                  <text class="card-likes" wx:if="{{item.likes > 0}}">♥ {{item.likes}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading-bar">
+    <text>加载中...</text>
+  </view>
+</scroll-view>

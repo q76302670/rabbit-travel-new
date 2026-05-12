@@ -1,0 +1,214 @@
+/* pages/user/profile.wxss — 他人主页（Stitch 视觉还原） */
+page {
+  background-color: #FFFFFF;
+}
+
+/* 渐变头部 */
+.user-header {
+  background: linear-gradient(180deg, #7C4DFF 0%, #9C6FFF 100%);
+  box-sizing: content-box;
+}
+
+.user-nav {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 16px;
+}
+
+.user-back {
+  font-size: 20px;
+  color: #FFFFFF;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-nav-title {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+}
+
+.user-nav-space {
+  width: 40px;
+}
+
+/* 用户信息 */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 24px;
+}
+
+.user-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  border: 3px solid rgba(255,255,255,0.6);
+}
+
+.user-avatar--empty {
+  background: rgba(255,255,255,0.2);
+}
+
+.user-nickname {
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.user-bio {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  margin-bottom: 12px;
+  max-width: 80%;
+}
+
+.user-stats {
+  display: flex;
+  gap: 32px;
+}
+
+.user-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 2px;
+}
+.stat-divider-short {
+  width: 1px; height: 24px;
+  background: rgba(255,255,255,0.25);
+  align-self: center;
+}
+
+/* 关注按钮 */
+.profile-action {
+  margin: 24rpx 32rpx 0;
+}
+.follow-btn {
+  width: 100%; height: 80rpx;
+  background: #7C4DFF; color: #FFFFFF;
+  border-radius: 40rpx; font-size: 28rpx; font-weight: 700;
+  border: none; line-height: 80rpx; text-align: center;
+}
+.follow-btn::after { border: none; }
+.follow-btn.following {
+  background: #FFFFFF; color: #7C4DFF;
+  border: 2rpx solid #7C4DFF;
+}
+
+/* 游记列表区 */
+.list-section {
+  padding: 0;
+  padding-bottom: calc(50px + env(safe-area-inset-bottom) + 24px);
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 8px;
+}
+
+.list-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.list-empty {
+  display: block;
+  text-align: center;
+  padding: 40px 0;
+  color: #999;
+  font-size: 14px;
+}
+
+.list-body {
+  padding: 0;
+}
+
+/* 游记卡片 */
+.journal-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.journal-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.journal-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5F0FF;
+  color: #999;
+  font-size: 14px;
+}
+
+.journal-scrim {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.journal-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.journal-title {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.3;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.journal-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 4px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}

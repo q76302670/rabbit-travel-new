@@ -1,0 +1,54 @@
+<!-- pages/user/profile.wxml — 他人主页（Stitch 视觉还原） -->
+<view class="user-page">
+  
+  <!-- 渐变头部 -->
+  <view class="user-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="user-nav">
+      <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" bindtap="goBack" />
+      <text class="user-nav-space"></text>
+    </view>
+    
+    <view class="user-info">
+      <image class="user-avatar" src="{{user.avatar}}" mode="aspectFill" binderror="handleImageError" data-imgfield="user.avatar" wx:if="{{user && user.avatar}}" />
+      <view class="user-avatar avatar-placeholder" wx:else>🐾</view>
+      <text class="user-nickname">{{user ? user.nickname : '用户'}}</text>
+      <text class="user-bio">{{user.bio || ''}}</text>
+      <view class="user-stats">
+        <view class="user-stat"><text class="stat-num">{{journals.length}}</text><text class="stat-label">游记</text></view>
+        <view class="stat-divider-short"></view>
+        <view class="user-stat"><text class="stat-num">{{user.follower_count || 0}}</text><text class="stat-label">粉丝</text></view>
+        <view class="stat-divider-short"></view>
+        <view class="user-stat"><text class="stat-num">{{user.following_count || 0}}</text><text class="stat-label">关注</text></view>
+      </view>
+    </view>
+    <view class="profile-action" wx:if="{{!isOwnProfile}}">
+      <button class="follow-btn {{followBtnClass}}" bindtap="toggleFollow">{{followBtnText}}</button>
+    </view>
+  </view>
+
+  <!-- 游记列表区 -->
+  <view class="list-section">
+    <view class="list-header">
+      <text class="list-title">游记</text>
+    </view>
+
+    <text wx:if="{{!loading && journals.length === 0}}" class="list-empty">Ta 还没有发布游记</text>
+
+    <view class="list-body">
+      <view class="journal-card" wx:for="{{journals}}" wx:key="_id" data-id="{{item._id}}" bindtap="goToDetail">
+        <image class="journal-cover" src="{{item.coverUrl || item.cover}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="journals" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+        <view class="journal-cover-placeholder img-placeholder" wx:else>🐾</view>
+        <view class="journal-scrim"></view>
+        <view class="journal-overlay">
+          <text class="journal-title">{{item.title}}</text>
+          <view class="journal-meta">
+            <text>{{item._time || ''}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 底部 TabBar -->
+<custom-tab-bar></custom-tab-bar>

@@ -1,0 +1,53 @@
+<!-- pages/preview/index.wxml — 发布预览页 -->
+<view class="page-preview">
+  <!-- 封面区 -->
+  <view class="pv-cover" wx:if="{{journal}}">
+    <image class="pv-cover-img" src="{{journal.cover}}" mode="aspectFill" wx:if="{{journal.cover}}" />
+    <view class="pv-cover-placeholder" wx:else>🐾</view>
+    <view class="pv-cover-grad"></view>
+    <view class="pv-cover-back" style="top: {{statusBarHeight}}px;" bindtap="goBack">‹</view>
+    <view class="pv-cover-info">
+      <text class="pv-cover-title">{{journal.title}}</text>
+      <view class="pv-cover-author">
+        <image class="pv-avatar" src="{{journal.author_avatar}}" mode="aspectFill" wx:if="{{journal.author_avatar}}" />
+        <view class="pv-avatar-placeholder" wx:else>🐾</view>
+        <text class="pv-nickname">{{journal.author_name || '旅行者'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:elif="{{loading}}" class="pv-loading"><text>加载中...</text></view>
+
+  <!-- 正文区 -->
+  <view class="pv-body" wx:if="{{journal}}">
+    <!-- 基本信息栏 -->
+    <view class="pv-meta">
+      <text class="pv-meta-item" wx:if="{{journal.destination}}">📍 {{journal.destination}}</text>
+      <text class="pv-meta-item" wx:if="{{journal.start_date}}">{{journal.start_date}}<text wx:if="{{journal.end_date}}"> → {{journal.end_date}}</text></text>
+      <text class="pv-meta-item" wx:if="{{journal.trip_days}}">{{journal.trip_days}}天旅程</text>
+      <text class="pv-meta-item" wx:if="{{hasPhotos}}">{{photoCount}}站行程</text>
+    </view>
+
+    <!-- 游记说明 -->
+    <view class="pv-intro" wx:if="{{journal.description}}">
+      <text>{{journal.description}}</text>
+    </view>
+
+    <!-- 节点时间线 -->
+    <view class="pv-timeline" wx:if="{{photos && photos.length > 0}}">
+      <view class="pv-tl-node" wx:for="{{photos}}" wx:key="sort_index" data-index="{{index}}">
+        <view class="pv-tl-dot"></view>
+        <view class="pv-tl-card">
+          <image class="pv-tl-img" src="{{item.url}}" mode="widthFix" wx:if="{{item.url}}" />
+          <view class="pv-tl-img-placeholder" wx:else>🐾</view>
+          <text class="pv-tl-desc" wx:if="{{item.description}}">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部预览标签 -->
+  <view class="pv-footer">
+    <text class="pv-footer-text">👁️ 预览模式 · 仅自己可见</text>
+  </view>
+</view>

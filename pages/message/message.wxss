@@ -1,0 +1,101 @@
+/* pages/message/message.wxss — 通知消息列表 */
+page { background-color: #FFFFFF; }
+
+/* ======== 导航栏 ======== */
+.page-header {
+  display: flex; align-items: center; height: 44px; box-sizing: content-box;
+  padding: 0 16px; background-color: #8A4DFF;
+}
+.header-back { font-size: 22px; color: #FFFFFF; width: 36px; height: 44px; line-height: 44px; text-align: center; flex-shrink: 0; }
+.header-title { flex: 1; font-size: 18px; font-weight: 700; color: #FFFFFF; text-align: center; }
+.header-action { font-size: 13px; color: rgba(255,255,255,0.9); }
+.header-action-disabled { opacity: 0.4; }
+
+/* ======== 空状态 ======== */
+.msg-body { padding-bottom: calc(0px + env(safe-area-inset-bottom)); }
+.msg-empty { text-align: center; padding: 80px 0; color: #999999; font-size: 14px; }
+
+/* ======== 通知列表项 ======== */
+.notification-item {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 24rpx;
+  margin: 16rpx 32rpx;
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* 未读状态 — 浅紫底色 + 右上角红点 */
+.notification-item.unread {
+  background: #F5F0FF;
+}
+
+.notification-item.unread::before {
+  content: '';
+  position: absolute;
+  top: 28rpx;
+  right: 28rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #FF4444;
+}
+
+/* 头像 */
+.ntf-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.ntf-avatar-empty {
+  background: #E8E0F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+/* 文案区 */
+.ntf-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.ntf-text {
+  display: block;
+  line-height: 1.6;
+}
+
+.ntf-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1A1A1A;
+}
+
+.ntf-action {
+  font-size: 26rpx;
+  color: #666;
+  margin-left: 4rpx;
+}
+
+.ntf-preview {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ntf-time {
+  display: block;
+  font-size: 22rpx;
+  color: #B0A0D0;
+  margin-top: 8rpx;
+}

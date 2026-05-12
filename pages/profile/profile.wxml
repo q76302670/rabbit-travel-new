@@ -1,0 +1,99 @@
+<!-- pages/profile/profile.wxml — 个人中心（电影感旅行日记 zip 风格） -->
+<!-- 沉浸式头部 -->
+<view class="profile-header" style="padding-top: {{statusBarHeight}}px;">
+  <view class="header-bg-deco"></view>
+  <view class="header-content">
+    <view class="header-avatar-row" bindtap="{{isLoggedIn ? 'goToEditProfile' : 'goToLogin'}}">
+      <image class="header-avatar" src="{{user.avatar}}" mode="aspectFill" binderror="handleImageError" data-imgfield="user.avatar" wx:if="{{user.avatar}}" />
+      <image class="header-avatar header-avatar-guest" src="/images/rabbit-icon.png" mode="aspectFit" wx:elif="{{!isLoggedIn}}" />
+      <view class="header-avatar avatar-placeholder" wx:else>🐾</view>
+      <view class="header-text">
+        <text class="header-name">{{user.nickname || '逍遥兔'}}</text>
+        <text class="header-bio" wx:if="{{user.bio}}">{{user.bio}}</text>
+        <text class="header-bio" wx:elif="{{!isLoggedIn}}">登录后可发布游记、参与互动</text>
+      </view>
+    </view>
+    <!-- 编辑资料按钮（白色描边胶囊） -->
+    <view class="edit-profile-btn" bindtap="goToEditProfile" wx:if="{{isLoggedIn}}">
+      <image class="edit-profile-icon" src="/static/icons/user-edit-white.svg" mode="aspectFit" />
+      <text class="edit-profile-text">编辑资料</text>
+    </view>
+  </view>
+</view>
+
+<!-- 数据看板卡片（重叠） -->
+<view class="stats-card">
+  <view class="stat-msg-entry" bindtap="goToMessages">
+    <image src="/static/icons/bell.svg" class="stat-msg-icon"/>
+    <view wx:if="{{unreadCount > 0}}" class="stat-msg-badge">
+      <text>{{unreadCount > 99 ? '99+' : unreadCount}}</text>
+    </view>
+  </view>
+  <view class="stats-row">
+    <view class="stat-item" bindtap="goToMyJournals">
+      <text class="stat-num">{{journalCount || 0}}</text>
+      <text class="stat-label">游记</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToFollowers">
+      <text class="stat-num">{{followerCount || 0}}</text>
+      <text class="stat-label">粉丝</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToFollowing">
+      <text class="stat-num">{{followingCount || 0}}</text>
+      <text class="stat-label">关注</text>
+    </view>
+  </view>
+</view>
+
+<!-- 偏好标签 -->
+<view class="tags-row" wx:if="{{userTags && userTags.length > 0}}">
+  <text class="tag-chip" wx:for="{{userTags}}" wx:key="*this">#{{item}}</text>
+</view>
+
+<!-- 菜单列表 -->
+<view class="menu-list">
+  <view class="menu-item" bindtap="goToMyJournals">
+    <view class="menu-icon-wrap"><image class="menu-item-icon" src="/static/icons/journal.svg" /></view>
+    <text class="menu-label">我的游记</text>
+    <text class="menu-count">{{journalCount || 0}}</text>
+    <text class="menu-arrow">›</text>
+  </view>
+  <view class="menu-item" bindtap="goToCollections">
+    <view class="menu-icon-wrap"><image class="menu-item-icon" src="/static/icons/bookmark.svg" /></view>
+    <text class="menu-label">收藏夹</text>
+    <text class="menu-count">0</text>
+    <text class="menu-arrow">›</text>
+  </view>
+  <view class="menu-item" bindtap="goToDrafts">
+    <view class="menu-icon-wrap"><image class="menu-item-icon" src="/static/icons/document.svg" /></view>
+    <text class="menu-label">草稿箱</text>
+    <text class="menu-count">{{draftCount || 0}}</text>
+    <text class="menu-arrow">›</text>
+  </view>
+  <view class="menu-item" bindtap="goToLikes">
+    <view class="menu-icon-wrap"><image class="menu-item-icon" src="/static/icons/heart.svg" /></view>
+    <text class="menu-label">点赞的回忆</text>
+    <text class="menu-count">0</text>
+    <text class="menu-arrow">›</text>
+  </view>
+  <view class="menu-item menu-item-noborder" bindtap="goToAdmin" wx:if="{{user && user.is_admin}}">
+    <view class="menu-icon-wrap"><image class="menu-item-icon" src="/static/icons/settings.svg" /></view>
+    <text class="menu-label">管理后台</text>
+    <text class="menu-arrow">›</text>
+  </view>
+</view>
+
+<!-- 退出登录 -->
+<view class="logout-section" wx:if="{{isLoggedIn}}" bindtap="handleLogout">
+  <view class="logout-btn">退出登录</view>
+</view>
+
+<!-- 未登录态登录引导 -->
+<view class="guest-login" wx:if="{{!isLoggedIn}}">
+  <text class="guest-login-subtitle">登录后可发布游记、参与互动</text>
+  <view class="profile-login-btn" bindtap="goToLogin">
+    <text>微信一键登录</text>
+  </view>
+</view>

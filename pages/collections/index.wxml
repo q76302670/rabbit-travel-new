@@ -1,0 +1,82 @@
+<!-- pages/collections/index.wxml — 我的收藏（Stitch ⭐ 原型） -->
+<view class="page-header" style="padding-top: {{statusBarHeight}}px; padding-right: {{navPaddingRight}}px;">
+  <view class="header-left">
+    <view class="nav-back" bindtap="goBack">
+      <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" />
+    </view>
+    <text class="header-title">我的收藏</text>
+  </view>
+</view>
+
+<!-- 搜索条 -->
+<view class="collect-search-bar">
+  <text class="collect-search-icon">🔍</text>
+  <input
+    class="search-input"
+    placeholder="搜索收藏的游记"
+    placeholder-class="search-placeholder"
+    value="{{searchKeyword}}"
+    bindinput="onSearchInput"
+    confirm-type="search"
+    bindconfirm="onSearch"
+  />
+  <view wx:if="{{searchKeyword}}" bindtap="onClearSearch" class="search-clear">×</view>
+</view>
+
+<view class="likes-body">
+  <!-- 统计行 -->
+  <view class="stats-row">
+    <text class="stats-num">{{filteredJournals.length}}</text>
+    <text class="stats-label">篇收藏游记</text>
+  </view>
+
+  <!-- 空态（无收藏） -->
+  <view wx:if="{{allJournals.length === 0}}" class="list-empty">
+    <text>还没有收藏，去发现好游记吧</text>
+  </view>
+
+  <!-- 搜索无结果 -->
+  <view wx:elif="{{searchKeyword && filteredJournals.length === 0}}" class="list-empty">
+    <text>没有找到相关收藏</text>
+  </view>
+
+  <!-- 双列瀑布流（flex） -->
+  <view class="card-grid" wx:elif="{{filteredJournals.length > 0}}">
+    <view class="card-col">
+      <block wx:for="{{filteredLeftCol}}" wx:key="_id">
+        <view class="card-item" data-id="{{item._id}}" bindtap="goToDetail">
+          <view class="card-cover-wrap">
+            <image class="card-cover" src="{{item.coverUrl || item.cover}}" mode="widthFix" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="filteredLeftCol" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+            <view class="card-cover-empty img-placeholder" wx:else>🐾</view>
+            <view class="card-save-icon">⭐</view>
+          </view>
+          <text class="card-title">{{item.title}}</text>
+          <view class="card-author">
+            <image class="card-avatar" src="{{item.author_avatar}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="author_avatar" data-imglist="filteredLeftCol" data-imgidfield="_id" wx:if="{{item.author_avatar}}" />
+            <view class="card-avatar-empty avatar-placeholder avatar-placeholder--sm" wx:else>🐾</view>
+            <text class="card-name">{{item.author_name || '旅行者'}}</text>
+            <text class="card-likes">❤️ {{item.like_count || 0}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="card-col">
+      <block wx:for="{{filteredRightCol}}" wx:key="_id">
+        <view class="card-item" data-id="{{item._id}}" bindtap="goToDetail">
+          <view class="card-cover-wrap">
+            <image class="card-cover" src="{{item.coverUrl || item.cover}}" mode="widthFix" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="filteredRightCol" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+            <view class="card-cover-empty img-placeholder" wx:else>🐾</view>
+            <view class="card-save-icon">⭐</view>
+          </view>
+          <text class="card-title">{{item.title}}</text>
+          <view class="card-author">
+            <image class="card-avatar" src="{{item.author_avatar}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="author_avatar" data-imglist="filteredRightCol" data-imgidfield="_id" wx:if="{{item.author_avatar}}" />
+            <view class="card-avatar-empty avatar-placeholder avatar-placeholder--sm" wx:else>🐾</view>
+            <text class="card-name">{{item.author_name || '旅行者'}}</text>
+            <text class="card-likes">❤️ {{item.like_count || 0}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,98 @@
+<!-- pages/drafts/drafts.wxml — 草稿箱（左图右紫块设计稿方向） -->
+<view class="page-header" style="padding-top: {{statusBarHeight}}px;">
+  <image class="nav-back-icon" src="/static/icons/arrow-back.svg" mode="aspectFit" bindtap="goBack" />
+  <text class="header-title">草稿箱</text>
+  <text class="header-spacer"></text>
+</view>
+
+<view class="drafts-body">
+  <!-- 顶部引导区 -->
+  <view class="drafts-hero" wx:if="{{drafts.length > 0}}">
+    <view class="hero-timeline"></view>
+    <view class="hero-text">
+      <text class="hero-title">待发布的游记</text>
+      <text class="hero-subtitle">等待分享的旅行记忆。</text>
+    </view>
+  </view>
+
+  <!-- 空态 -->
+  <view wx:if="{{!loading && drafts.length === 0}}" class="drafts-empty">
+    <text class="drafts-empty-icon">📝</text>
+    <text class="drafts-empty-text">还没有草稿</text>
+    <text class="drafts-empty-sub">开始记录你的旅行故事吧</text>
+    <navigator url="/pages/publish/publish" open-type="switchTab" class="drafts-empty-action">
+      <view class="drafts-empty-btn">写第一篇游记</view>
+    </navigator>
+  </view>
+
+  <!-- 草稿列表 -->
+  <view class="drafts-list">
+    <view
+      class="draft-card"
+      wx:for="{{drafts}}"
+      wx:key="_id"
+      data-id="{{item._id}}"
+      data-title="{{item.title}}"
+      bindtap="editDraft"
+    >
+      <!-- 左侧：图片预览区 -->
+      <view class="draft-image-side">
+        <image class="draft-image" src="{{item.coverUrl || item.cover}}" mode="aspectFill" binderror="handleImageError" data-id="{{item._id}}" data-imgfield="coverUrl" data-imglist="drafts" data-imgidfield="_id" wx:if="{{item.coverUrl || item.cover}}" />
+        <view class="draft-image draft-image-empty" wx:else>
+          <text class="draft-image-emoji">🐾</text>
+        </view>
+        <!-- 草稿标记 -->
+        <view class="draft-badge">
+          <text class="draft-badge-text">草稿</text>
+        </view>
+      </view>
+
+      <!-- 右侧：紫色信息区 -->
+      <view class="draft-info-side">
+        <text class="draft-title">{{item.title || '未命名游记'}}</text>
+
+        <!-- 分隔装饰 -->
+        <view class="draft-divider"></view>
+
+        <!-- 统计行 -->
+        <view class="draft-stats">
+          <view class="draft-stat-item">
+            <text class="draft-stat-icon">📌</text>
+            <text class="draft-stat-value">{{item.nodeCount || 0}}</text>
+            <text class="draft-stat-label">节点</text>
+          </view>
+          <view class="draft-stat-divider"></view>
+          <view class="draft-stat-item">
+            <text class="draft-stat-icon">📷</text>
+            <text class="draft-stat-value">{{item.photoCount || item.photo_count || 0}}</text>
+            <text class="draft-stat-label">照片</text>
+          </view>
+        </view>
+
+        <!-- 时间 -->
+        <view class="draft-footer">
+          <text class="draft-time-icon">🕐</text>
+          <text class="draft-time">{{item._time}}</text>
+        </view>
+
+        <!-- 继续编辑入口 -->
+        <view class="draft-continue">
+          <text class="draft-continue-text">继续编辑 ›</text>
+        </view>
+      </view>
+
+      <!-- 删除按钮 -->
+      <view class="draft-delete" bindtap="deleteDraft" data-id="{{item._id}}" data-title="{{item.title}}" catchtap>
+        <text class="draft-delete-icon">✕</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部新建入口 -->
+  <view class="drafts-bottom" wx:if="{{drafts.length > 0}}">
+    <navigator url="/pages/publish/publish" open-type="switchTab" class="drafts-create-btn">
+      <text class="drafts-create-icon">＋</text>
+      <text class="drafts-create-text">新建草稿</text>
+    </navigator>
+  </view>
+</view>

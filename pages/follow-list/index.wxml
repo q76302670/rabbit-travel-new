@@ -1,0 +1,28 @@
+<!-- pages/follow-list/index.wxml — 粉丝/关注通用列表 -->
+<view class="follow-list-page">
+  <!-- 顶部导航 -->
+  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
+    <view bindtap="goBack" class="nav-back">
+      <image src="/static/icons/arrow-back.svg" class="back-icon"/>
+    </view>
+    <text class="nav-title">{{pageTitle}}</text>
+  </view>
+
+  <!-- 内容区 -->
+  <view class="content-wrap" style="padding-top:{{navHeight}}px">
+    <view wx:if="{{users.length === 0}}" class="empty-state">
+      <text class="empty-icon-text">👥</text>
+      <text class="empty-title">{{emptyText}}</text>
+    </view>
+
+    <view wx:else class="user-list">
+      <view wx:for="{{users}}" wx:key="openid" class="user-item" bindtap="goToUser" data-id="{{item.openid}}">
+        <image class="user-avatar" src="{{item.avatar}}" mode="aspectFill"/>
+        <view class="user-info">
+          <text class="user-name">{{item.nickname}}</text>
+          <text class="user-bio">{{item.bio || '这个人很懒，什么都没写'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

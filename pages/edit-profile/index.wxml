@@ -1,0 +1,45 @@
+<!-- pages/edit-profile/index.wxml — 编辑资料（渐变头部） -->
+<view class="edit-profile-page">
+  <!-- 渐变头部区（导航栏 + 头像区） -->
+  <view class="edit-profile-header" style="padding-top:{{statusBarHeight}}px">
+    <!-- 导航栏 -->
+    <view class="page-nav">
+      <text class="nav-cancel" bindtap="goBack">取消</text>
+      <text class="nav-title">编辑资料</text>
+      <view class="nav-placeholder"></view>
+    </view>
+
+    <!-- 头像区 -->
+    <view class="avatar-wrap">
+      <view class="avatar-circle" bindtap="chooseAvatar">
+        <image class="avatar-image" src="{{avatar}}" mode="aspectFill" binderror="handleImageError" wx:if="{{avatar}}" />
+        <view class="avatar-image avatar-image-empty" wx:else>🐾</view>
+        <view class="avatar-edit-icon">
+          <image class="avatar-edit-svg" src="/static/icons/edit-pen.svg" mode="aspectFit" />
+        </view>
+      </view>
+      <text class="avatar-hint" bindtap="chooseAvatar">点击更换头像</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="content-wrap">
+    <!-- 昵称卡片 -->
+    <view class="form-card">
+      <text class="field-label">昵称</text>
+      <input class="field-input" value="{{nickname}}" maxlength="20" placeholder="输入昵称" bindinput="onNicknameInput" />
+    </view>
+
+    <!-- 简介卡片 -->
+    <view class="form-card">
+      <text class="field-label">个人简介</text>
+      <textarea class="field-textarea" value="{{bio}}" maxlength="200" placeholder="介绍一下自己..." bindinput="onBioInput" />
+      <text class="field-count">{{bio.length || 0}}/200</text>
+    </view>
+>
+  </scroll-view>
+
+  <!-- 底部确认按钮 -->
+  <view class="confirm-btn-wrap">
+    <button class="confirm-btn" bindtap="saveProfile">{{saving ? '保存中...' : '确认更新'}}</button>
+  </view>
+</view>

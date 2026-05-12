@@ -1,0 +1,187 @@
+<!-- pages/publish/publish.wxml — 发布页编辑器 -->
+<!-- 顶部操作栏 -->
+<view class="publish-header" style="padding-top: {{statusBarHeight}}px; padding-right: {{navPaddingRight}}px;">
+  <text class="header-close" bindtap="goBack">✕</text>
+  <view class="header-center">
+    <text class="header-title">{{isEdit ? '编辑游记' : '新建日记'}}</text>
+  </view>
+  <view class="header-actions">
+    <button class="header-publish" bindtap="publish" disabled="{{publishing}}">
+      {{publishing ? '发布中...' : '发布'}}
+    </button>
+  </view>
+</view>
+
+<!-- ======== 编辑状态（预览模式隐藏） ======== -->
+<view wx:if="{{!previewMode}}">
+  <!-- 草稿状态标识条 -->
+  <view class="draft-indicator" wx:if="{{draftId}}">
+    <text class="draft-icon">📝</text>
+    <text class="draft-label">编辑中：{{draftTitle || '未命名草稿'}}</text>
+    <text class="draft-time" wx:if="{{savedTime}}">{{savedTime}}</text>
+  </view>
+
+  <scroll-view class="publish-body" scroll-y>
+    <view wx:if="{{!dataReady}}" class="loading"><text>加载中...</text></view>
+
+    <block wx:if="{{dataReady}}">
+      <!-- ======== 封面区 ======== -->
+      <block wx:if="{{coverUrl}}">
+        <view class="cover-display" bindtap="onCoverTap">
+          <image class="cover-image" src="{{coverUrl}}" mode="aspectFill" />
+          <view class="change-cover-btn">更换封面</view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="cover-placeholder" bindtap="onCoverTap">
+          <view class="cover-icon-wrap">
+            <image class="cover-icon" src="/static/icons/camera-purple.svg" mode="aspectFit" />
+          </view>
+          <text class="cover-title">添加封面</text>
+          <text class="cover-hint">上传节点照片后，可从中挑选最美的一张作为封面</text>
+        </view>
+      </block>
+
+      <!-- ======== 标题输入 ======== -->
+      <view class="title-section">
+        <input class="title-input" placeholder="请输入故事标题..." maxlength="50" value="{{title}}" bindinput="onTitleInput" />
+      </view>
+
+      <!-- ======== 基础信息卡片 ======== -->
+      <view class="info-grid">
+        <view class="info-card">
+          <text class="info-icon">📍</text>
+          <view class="info-text">
+            <text class="info-label">目的地</text>
+            <input class="info-value" placeholder="添加地点" value="{{location}}" bindinput="onLocationInput" />
+          </view>
+        </view>
+        <view class="info-card">
+          <text class="info-icon">📅</text>
+          <view class="info-text">
+            <text class="info-label">旅行日期</text>
+            <view class="date-pickers">
+              <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+                <text class="info-value" wx:if="{{startDate}}">{{startDate}}</text>
+                <text class="info-placeholder" wx:else>开始</text>
+              </picker>
+              <text class="date-sep">→</text>
+              <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+                <text class="info-value" wx:if="{{endDate}}">{{endDate}}</text>
+                <text class="info-placeholder" wx:else>结束</text>
+              </picker>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 行程天数 -->
+      <view class="trip-days-wrap" wx:if="{{tripDays > 0}}">
+        <text class="trip-days-text">共 {{tripDays}} 天旅程</text>
+      </view>
+
+      <!-- ======== 节点时间轴 ======== -->
+      <view class="timeline">
+        <view class="timeline-line"></view>
+        <view class="timeline-nodes">
+          <view class="timeline-node" wx:for="{{images}}" wx:key="_key" data-index="{{index}}">
+            <view class="timeline-marker">
+              <view class="marker-dot">
+                <text class="marker-num">{{index + 1}}</text>
+              </view>
+            </view>
+            <view class="timeline-card">
+              <view class="card-top">
+                <text class="card-title">照片 {{index + 1}}</text>
+                <text class="card-del" data-index="{{index}}" bindtap="removeImage">🗑️</text>
+              </view>
+              <view class="card-photos">
+                <image class="card-photo" src="{{item.path}}" mode="aspectFill" wx:if="{{item.path}}" />
+              </view>
+              <text class="card-cover-badge" wx:if="{{coverUrl === item.path}}">封面</text>
+              <textarea class="card-caption" placeholder="记录下这一刻的惊喜..." value="{{item.caption}}" data-index="{{index}}" bindinput="onCaptionInput" />
+            </view>
+          </view>
+        </view>
+        <view class="add-node" wx:if="{{images.length < 9}}" bindtap="chooseImages">
+          <view class="add-node-btn">
+            <text class="add-node-icon">+</text>
+            <text class="add-node-text">添加行程节点</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- ======== 游记总说明 ======== -->
+      <view class="description-section">
+        <textarea
+          class="description-input"
+          value="{{description}}"
+          bindinput="onDescriptionInput"
+          placeholder="游记总说明（可选）"
+          placeholder-class="description-placeholder"
+          maxlength="500"
+          auto-height
+        />
+      </view>
+
+      <view class="bottom-spacer"></view>
+    </block>
+  </scroll-view>
+</view>
+
+<!-- ======== 底部操作栏 ======== -->
+<view class="bottom-bar" wx:if="{{dataReady && !previewMode}}">
+  <!-- 预览 -->
+  <view class="bottom-btn" bindtap="onPreview">
+    <image class="bottom-btn-icon" src="/static/icons/eye.svg" mode="aspectFit" />
+    <text class="bottom-btn-text">预览</text>
+  </view>
+
+  <!-- 草稿箱（带红点） -->
+  <view class="bottom-btn" bindtap="goToDrafts">
+    <image class="bottom-btn-icon" src="/static/icons/file-text.svg" mode="aspectFit" />
+    <text class="bottom-btn-text">草稿箱</text>
+    <view class="draft-badge" wx:if="{{hasUnsavedDraft}}"></view>
+  </view>
+
+  <!-- 保存草稿 -->
+  <view class="save-draft-btn" bindtap="saveDraft">
+    <image class="sd-icon" src="/static/icons/bookmark.svg" mode="aspectFit" />
+    <text class="sd-text">{{saving ? '保存中...' : '保存草稿'}}</text>
+  </view>
+</view>
+
+<!-- ======== 预览遮罩（页面内 overlay） ======== -->
+<view class="preview-overlay {{previewMode ? 'show' : ''}}">
+  <view class="preview-header" style="padding-top: {{statusBarHeight}}px;">
+    <text class="preview-back" bindtap="onClosePreview">← 返回编辑</text>
+  </view>
+  <scroll-view class="preview-body" scroll-y>
+    <view wx:if="{{coverUrl}}" class="pv-cover">
+      <image class="pv-cover-img" src="{{coverUrl}}" mode="aspectFill" />
+      <view class="pv-cover-grad"></view>
+      <view class="pv-cover-text">
+        <text class="pv-title">{{title || '未命名游记'}}</text>
+      </view>
+    </view>
+    <view class="pv-content">
+      <view class="pv-meta" wx:if="{{location || startDate}}">
+        <text class="pv-meta-item" wx:if="{{location}}">📍 {{location}}</text>
+        <text class="pv-meta-item" wx:if="{{startDate}}">{{startDate}}<text wx:if="{{endDate}}"> → {{endDate}}</text></text>
+        <text class="pv-meta-item" wx:if="{{tripDays > 0}}">{{tripDays}} 天旅程</text>
+      </view>
+      <view class="pv-desc" wx:if="{{description}}"><text>{{description}}</text></view>
+      <view class="pv-timeline" wx:if="{{images.length > 0}}">
+        <view class="pv-node" wx:for="{{images}}" wx:key="_key">
+          <view class="pv-node-line"></view>
+          <view class="pv-node-dot"></view>
+          <view class="pv-card">
+            <image class="pv-card-img" src="{{item.path}}" mode="widthFix" wx:if="{{item.path}}" />
+            <text class="pv-card-desc" wx:if="{{item.caption}}">{{item.caption}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="pv-spacer"></view>
+  </scroll-view>
+</view>
