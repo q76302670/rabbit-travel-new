@@ -10,6 +10,7 @@ Page({
     user: null,
     isLoggedIn: false,
     journalCount: 0,
+    draftCount: 0,
     followerCount: 0,
     followingCount: 0,
     statusBarHeight: 44,
@@ -37,7 +38,7 @@ Page({
     var isLoggedIn = app.globalData.isLoggedIn
 
     if (!isLoggedIn || !user) {
-      this.setData({ isLoggedIn: false, user: null, journalCount: 0, likeCount: 0 })
+      this.setData({ isLoggedIn: false, user: null, journalCount: 0, draftCount: 0, likeCount: 0 })
       return
     }
 
@@ -48,7 +49,8 @@ Page({
       var statsRes = await this._callCloud('getUserStats', {})
       if (statsRes && statsRes.code === 0) {
         this.setData({
-          journalCount: statsRes.journalCount || 0
+          journalCount: statsRes.journalCount || 0,
+          draftCount: statsRes.draftCount || 0
         })
       } else {
         throw new Error('stats failed')
@@ -229,6 +231,7 @@ Page({
           avatar: '',
           nickname: '',
           journalCount: 0,
+          draftCount: 0,
         })
 
         // ----- 标记已主动退出，防止下次冷启动自动登录 -----
