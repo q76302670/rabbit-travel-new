@@ -536,6 +536,22 @@ Page({
     }
   },
 
+  onFinishTripTap() {
+    if (this.data.publishing) return;
+    wx.showModal({
+      title: '确认结束行程',
+      content: '结束这次行程后，游记将公开发布到首页，所有人都能看到。确认结束吗？',
+      confirmText: '确认结束',
+      cancelText: '取消',
+      confirmColor: '#8A4DFF',
+      success: (res) => {
+        if (res.confirm) {
+          this.publish();
+        }
+      }
+    });
+  },
+
   async saveDraft() {
     this.setData({ saving: true, _savedBeforeUnload: true })
     try {

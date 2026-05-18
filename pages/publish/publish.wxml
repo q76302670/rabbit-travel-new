@@ -6,9 +6,9 @@
     <text class="header-title">{{isEdit ? '编辑游记' : '新建日记'}}</text>
   </view>
   <view class="header-actions">
-    <button class="header-publish" bindtap="publish" disabled="{{publishing}}">
-      {{publishing ? '发布中...' : '发布'}}
-    </button>
+    <view class="header-publish {{publishing ? 'is-loading' : ''}}" bindtap="onFinishTripTap">
+      {{publishing ? '处理中...' : '结束行程'}}
+    </view>
   </view>
 </view>
 

@@ -22,18 +22,19 @@ page {
 }
 .header-title {
   font-size: 17px; font-weight: 700; color: #1A1A1A;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .header-actions {
   display: flex; align-items: center; gap: 8px;
 }
 .header-publish {
-  padding: 6px 20px; background: #7C4DFF; color: #FFF;
-  border-radius: 20px; font-size: 13px; font-weight: 700;
-  line-height: 1.4;
-  box-shadow: 0 4px 12px rgba(124,77,255,0.3);
-  margin-right: 12px;
+  padding: 6px 16px; background: #8A4DFF; color: #FFFFFF;
+  border-radius: 20px; font-size: 13px;
+  white-space: nowrap;
 }
-.header-publish[disabled] { opacity: 0.6; }
+.header-publish.is-loading {
+  background: #CCCCCC; pointer-events: none;
+}
 
 /* ======== 草稿指示条 ======== */
 .draft-indicator {
@@ -170,7 +171,7 @@ page {
   flex: 1; background: #FFFFFF; border-radius: 16px; padding: 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #F0F0F0; position: relative;
 }
-.card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.card-top { display: flex; justify-content: space-between; align-items: center; margin-top: 14rpx; margin-bottom: 10px; }
 .card-title { font-size: 14px; font-weight: 700; color: #1A1A1A; }
 .card-del { font-size: 16px; color: #999; padding: 4px; }
 .card-photo { width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; object-fit: cover; display: block; background: #F5F0FF; margin-bottom: 10px; }
